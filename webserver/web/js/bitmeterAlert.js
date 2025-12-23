@@ -174,9 +174,9 @@ BITMETER.updateAlertProgressBars = function(){
                     floaterHtml = '<h4>' + name + '</h4>' +
                         '<p>This alert has been triggered</p>' +
                         '<table>' +
-                        '<tr><td class="alertStatusFloaterName">Current</td><td class="alertStatusFloaterValue">' + BITMETER.formatAmount(current) + '</td></tr>' +
-                        '<tr><td class="alertStatusFloaterName">Exceeded by</td><td class="alertStatusFloaterValue">' + BITMETER.formatAmount(current - target) + '</td></tr>' +
-                        '<tr><td class="alertStatusFloaterName">Limit</td><td class="alertStatusFloaterValue">' + BITMETER.formatAmount(target) + '</td></tr>' +
+                        '<tr><td class="alertStatusFloaterName">Current</td><td class="alertStatusFloaterValue">' + BITMETER.formatDataAmount(current) + '</td></tr>' +
+                        '<tr><td class="alertStatusFloaterName">Exceeded by</td><td class="alertStatusFloaterValue">' + BITMETER.formatDataAmount(current - target) + '</td></tr>' +
+                        '<tr><td class="alertStatusFloaterName">Limit</td><td class="alertStatusFloaterValue">' + BITMETER.formatDataAmount(target) + '</td></tr>' +
                         '<tr><td class="alertStatusFloaterName">Progress</td><td class="alertStatusFloaterValue">' + (100 * current/target).toFixed(2) + '%</td></tr>' +
                         '</table>';
                     BITMETER.infoFloat.getBox().addClass('floaterErr');
@@ -184,9 +184,9 @@ BITMETER.updateAlertProgressBars = function(){
                 } else {
                     floaterHtml = '<h4>' + name + '</h4>' +
                         '<table>' +
-                        '<tr><td class="alertStatusFloaterName">Current</td><td class="alertStatusFloaterValue">' + BITMETER.formatAmount(current) + '</td></tr>' +
-                        '<tr><td class="alertStatusFloaterName">Remaining</td><td class="alertStatusFloaterValue">' + BITMETER.formatAmount(target - current) + '</td></tr>' +
-                        '<tr><td class="alertStatusFloaterName">Limit</td><td class="alertStatusFloaterValue">' + BITMETER.formatAmount(target) + '</td></tr>' +
+                        '<tr><td class="alertStatusFloaterName">Current</td><td class="alertStatusFloaterValue">' + BITMETER.formatDataAmount(current) + '</td></tr>' +
+                        '<tr><td class="alertStatusFloaterName">Remaining</td><td class="alertStatusFloaterValue">' + BITMETER.formatDataAmount(target - current) + '</td></tr>' +
+                        '<tr><td class="alertStatusFloaterName">Limit</td><td class="alertStatusFloaterValue">' + BITMETER.formatDataAmount(target) + '</td></tr>' +
                         '<tr><td class="alertStatusFloaterName">Progress</td><td class="alertStatusFloaterValue">' + (100 * current/target).toFixed(2) + '%</td></tr>' +
                         '</table>';
                     BITMETER.infoFloat.getBox().removeClass('floaterErr');
@@ -519,7 +519,7 @@ BITMETER.updateCreateAlertViewFromModel = function(isUserEdit){
  // If no amount has been entered then enter one
     amt = BITMETER.createAlertModel.getAmount();
     if (!isUserEdit && (amt !== null)){
-        $('#createAlertAmount').val(BITMETER.formatAmount(amt, true));
+        $('#createAlertAmount').val(BITMETER.formatDataAmount(amt, true));
     } else if (amt === null) {
         $('#createAlertAmount').val('');
     }
@@ -1054,7 +1054,7 @@ $(function(){
         bytes = BITMETER.parseAmountValue(txtValue);
         bytes = bytes || 0;
         bytes = Math.round(bytes);
-        amountTxt = BITMETER.formatAmount(bytes);
+        amountTxt = BITMETER.formatDataAmount(bytes);
         $('#createAlertAmountDesc').html(amountTxt);
         BITMETER.createAlertModel.setAmount(bytes);
     });

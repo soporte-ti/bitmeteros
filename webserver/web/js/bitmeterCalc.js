@@ -88,7 +88,7 @@ $(function(){
             speed = (useSliderForHowMuch ? sliderDiv.slider('value') : parseSpeed(howMuchSpeedInput.val()));
             
             if (time !== null && speed !== null){
-                result = BITMETER.formatAmount(time * speed);
+                result = BITMETER.formatDataAmount(time * speed);
                 desc   = 'Transferred in ' + BITMETER.formatInterval(time, BITMETER.formatInterval.LONG) + ' at ' + BITMETER.formatAmount(speed) + '/s';
             } else {
                 result = '?';
@@ -120,7 +120,7 @@ $(function(){
                     desc   = 'Transfer will never complete when speed is 0';   
                 } else {
                     result = BITMETER.formatInterval(amount/speed, BITMETER.formatInterval.SHORT);
-                    desc   = 'To transfer ' + BITMETER.formatAmount(amount) + ' at ' + BITMETER.formatAmount(speed) + '/s';
+                    desc   = 'To transfer ' + BITMETER.formatDataAmount(amount) + ' at ' + BITMETER.formatAmount(speed) + '/s';
                 }    
             } else {
                 result = '?';

@@ -169,16 +169,92 @@ $(function(){
     
     
  // Set the correct display units type, and attach click handlers
-    if (BITMETER.model.getBinaryUnits()){
-        $('#binaryUnits').attr('checked', true);
-    } else {
-        $('#decimalUnits').attr('checked', true);
+    function populateUnitOptions(useBits){
+        var opts = useBits ? [
+                {value : 'auto', text : 'Automatic (b/kb/Mb...)'},
+                {value : 'b',   text : 'Bits (b)'},
+                {value : 'kb',  text : 'Kilobits (kb)'},
+                {value : 'Mb',  text : 'Megabits (Mb)'},
+                {value : 'Gb',  text : 'Gigabits (Gb)'},
+                {value : 'Tb',  text : 'Terabits (Tb)'},
+                {value : 'Pb',  text : 'Petabits (Pb)'}
+            ] : [
+                {value : 'auto', text : 'Automatic (B/kB/MB...)'},
+                {value : 'B',   text : 'Bytes (B)'},
+                {value : 'kB',  text : 'Kilobytes (kB)'},
+                {value : 'MB',  text : 'Megabytes (MB)'},
+                {value : 'GB',  text : 'Gigabytes (GB)'},
+                {value : 'TB',  text : 'Terabytes (TB)'},
+                {value : 'PB',  text : 'Petabytes (PB)'}
+            ],
+            select = $('#prefFixedUnit'),
+            current = select.val();
+
+        select.html('');
+        $.each(opts, function(_, opt){
+            select.append('<option value="' + opt.value + '">' + opt.text + '</option>');
+        });
+
+        if (current && select.find('option[value="' + current + '"]').length > 0){
+            select.val(current);
+        }
     }
-    $('#prefsUnitsLocal').click(function(){
-        var isBinary = $('#binaryUnits').attr('checked');
+
+    function setUnitPreferences(){
+        var isBinary = $('#binaryUnits').is(':checked'),
+            useBits = $('#unitBits').is(':checked'),
+            fixedUnit = $('#prefFixedUnit').val(),
+            dp = Number($('#prefDecimalPlaces').val());
+
+        if (isNaN(dp) || dp < 0){
+            dp = 0;
+        } else if (dp > 6){
+            dp = 6;
+        }
+
+        $('#prefDecimalPlaces').val(dp);
+
         BITMETER.model.setBinaryUnits(isBinary);
+        BITMETER.model.setUseBits(useBits);
+        BITMETER.model.setFixedUnit(fixedUnit);
+        BITMETER.model.setBandwidthDp(dp);
+    }
+
+    function initUnitPreferences(){
+        if (BITMETER.model.getBinaryUnits()){
+            $('#binaryUnits').attr('checked', true);
+        } else {
+            $('#decimalUnits').attr('checked', true);
+        }
+
+        if (BITMETER.model.getUseBits()){
+            $('#unitBits').attr('checked', true);
+        } else {
+            $('#unitBytes').attr('checked', true);
+        }
+
+        populateUnitOptions(BITMETER.model.getUseBits());
+
+        $('#prefFixedUnit').val(BITMETER.model.getFixedUnit());
+        if (!$('#prefFixedUnit').val()){
+            $('#prefFixedUnit').val('auto');
+        }
+
+        $('#prefDecimalPlaces').val(BITMETER.model.getBandwidthDp());
+    }
+
+    $('#unitBits, #unitBytes').click(function(){
+        populateUnitOptions($('#unitBits').is(':checked'));
+    });
+
+    $('#prefsUnitsLocal').click(function(){
+        setUnitPreferences();
         window.location.reload();
     });
+
+    $('#prefDecimalPlaces').keypress(BITMETER.makeKeyPressHandler(0,8,'0-9'));
+
+    initUnitPreferences();
     $('#prefsUnitsLocal').button();
 
  // Handler for refresh page link

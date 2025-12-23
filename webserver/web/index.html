@@ -691,22 +691,41 @@
 								<button id="prefsAdaptersSaveLocal">Save in Browser</button>
 							</p>
 					    </div>
-					    <div id="prefsTabs-3">
-					        <p class="compact">What type of units should be used when displaying data speeds/volumes.</p>
-							<table class="prefTable">
-								<tr>
-									<td><input type="radio" class="prefRadio" id="binaryUnits" name="displayUnits" /></td>
-									<td><label for="binaryUnits">Binary Units (1kB = 1024 bytes)</label></td>
-								</tr>
-								<tr>
-									<td><input type="radio" class="prefRadio"id="decimalUnits" name="displayUnits" /></td>
-									<td><label for="decimalUnits">Decimal/SI Units (1kB = 1000 bytes)</label></td>
-								</tr>
-							</table>
-							<p>
-								<button id="prefsUnitsLocal">Save in Browser</button> 
-							</p>
-					    </div>
+                                                <div id="prefsTabs-3">
+                                                <p class="compact">What type of units should be used when displaying data speeds/volumes.</p>
+                                                        <table class="prefTable">
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio" id="binaryUnits" name="displayUnits" /></td>
+                                                                        <td><label for="binaryUnits">Binary Units (1kB = 1024 bytes)</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio"id="decimalUnits" name="displayUnits" /></td>
+                                                                        <td><label for="decimalUnits">Decimal/SI Units (1kB = 1000 bytes)</label></td>
+                                                                </tr>
+                                                        </table>
+                                                <p class="compact">Choose whether to display rates in bits or bytes and pick a fixed unit if required.</p>
+                                                        <table class="prefTable">
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio" id="unitBytes" name="bitByteUnits" /></td>
+                                                                        <td><label for="unitBytes">Show values in Bytes</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio" id="unitBits" name="bitByteUnits" /></td>
+                                                                        <td><label for="unitBits">Show values in Bits</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><label for="prefFixedUnit">Display unit:</label></td>
+                                                                        <td><select id="prefFixedUnit"></select></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><label for="prefDecimalPlaces">Decimal places:</label></td>
+                                                                        <td><input type="text" id="prefDecimalPlaces" class="textbox" maxlength="1" /></td>
+                                                                </tr>
+                                                        </table>
+                                                        <p>
+                                                                <button id="prefsUnitsLocal">Save in Browser</button>
+                                                        </p>
+                                            </div>
 					    <div id="prefsTabs-4">
 					        <p class="compact">Configure the <a class="popup" href="rss.xml">RSS Feed</a></p>
 					        <h4>Number of Items</h4>
