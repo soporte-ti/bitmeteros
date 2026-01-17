@@ -2,20 +2,10 @@
 /*jslint onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true, strict: false */
 
 BITMETER.tabShowCalc = function(){
-    function setSliderRange(min, max){
-        var value = $('#calcSlider').slider('value');
-        $('#calcSlider').slider('option', 'max', max);
-        $('#calcSliderMax').html('- ' + BITMETER.formatAmount(max) + '/s');
-        $('#calcSliderMin').html('- ' + BITMETER.formatAmount(min) + '/s');
-        $('#calcSlider').slider('value', value); // need to reset the value so that the handle is positioned correctly
-    }
-    setSliderRange(0, BITMETER.model.getMonitorScale());
 };
 
 $(function(){
     var bytesPerK         = BITMETER.getBytesPerK(),
-        sliderDiv         = $('#calcSlider'),
-        calcSliderValue   = $('#calcSliderValue'),
         timeInput         = $('#calcHowMuchTimeInput'),
         howMuchSpeedInput = $('#calcHowMuchSpeedInput'),
         calcHowMuchResult = $('#calcHowMuchResult'),
@@ -24,9 +14,7 @@ $(function(){
         howLongSpeedInput = $('#calcHowLongSpeedInput'),
         calcHowLongResult = $('#calcHowLongResult'),
         calcHowLongDesc   = $('#calcHowLongDesc'),
-        parseTimeValue,
-        useSliderForHowMuch = true,
-        useSliderForHowLong = true;
+        parseTimeValue;
     
     function parseSpeed(txt){
         var num = Number(txt);
@@ -81,14 +69,14 @@ $(function(){
     function updateHowMuchResult(){
         var time, speed, result = '', desc = '',
             gotTime = !!timeInput.val(),
-            gotSpeed  = useSliderForHowMuch || howMuchSpeedInput.val();
-        
+            gotSpeed  = !!howMuchSpeedInput.val();
+
         if (gotTime && gotSpeed){
             time  = parseTimeValue(timeInput.val());
-            speed = (useSliderForHowMuch ? sliderDiv.slider('value') : parseSpeed(howMuchSpeedInput.val()));
+            speed = parseSpeed(howMuchSpeedInput.val());
             
             if (time !== null && speed !== null){
-                result = BITMETER.formatAmount(time * speed);
+                result = BITMETER.formatDataAmount(time * speed);
                 desc   = 'Transferred in ' + BITMETER.formatInterval(time, BITMETER.formatInterval.LONG) + ' at ' + BITMETER.formatAmount(speed) + '/s';
             } else {
                 result = '?';
@@ -108,11 +96,11 @@ $(function(){
     
     function updateHowLongResult(){
         var amount, speed, result = '', desc = '', gotAmount = !!amountInput.val(),
-            gotSpeed  = useSliderForHowLong || howLongSpeedInput.val();
+            gotSpeed  = !!howLongSpeedInput.val();
 
         if (gotAmount && gotSpeed){
             amount = BITMETER.parseAmountValue(amountInput.val());
-            speed = (useSliderForHowLong ? sliderDiv.slider('value') : parseSpeed(howLongSpeedInput.val()));
+            speed = parseSpeed(howLongSpeedInput.val());
             
             if (amount !== null && speed !== null){
                 if (speed === 0){
@@ -120,7 +108,7 @@ $(function(){
                     desc   = 'Transfer will never complete when speed is 0';   
                 } else {
                     result = BITMETER.formatInterval(amount/speed, BITMETER.formatInterval.SHORT);
-                    desc   = 'To transfer ' + BITMETER.formatAmount(amount) + ' at ' + BITMETER.formatAmount(speed) + '/s';
+                    desc   = 'To transfer ' + BITMETER.formatDataAmount(amount) + ' at ' + BITMETER.formatAmount(speed) + '/s';
                 }    
             } else {
                 result = '?';
@@ -138,58 +126,6 @@ $(function(){
         calcHowLongDesc.html(desc);
     }
     
-    function onSliderChange(value){
-        calcSliderValue.html(BITMETER.formatAmount(value) + '/s');
-        if (useSliderForHowMuch){
-            updateHowMuchResult();
-        }
-        if (useSliderForHowLong){
-            updateHowLongResult();
-        }
-    }
-
-    sliderDiv.slider({
-        animate: true,
-        orientation : 'vertical',
-        min: 0,
-        max: BITMETER.model.getMonitorScale(),
-        change: function(event, ui) {
-                onSliderChange(ui.value);
-            },
-        slide: function(event, ui) {
-                onSliderChange(ui.value);
-            }
-    }); 
-    
-    function getSliderValueInK(){
-        return Math.round(sliderDiv.slider('value')/bytesPerK);
-    }
-
-    $('a#calcShowHowMuchSpeedLink').click(function(){
-        $('span#calcHowMuchSpeedInputSpan').show();
-        $('span#calcHowMuchSpeedLinkSpan').hide();
-        $('span#calcHowMuchSpeedInputSpan input').val(getSliderValueInK()).focus().select();
-        useSliderForHowMuch = false;
-    });
-    $('a#calcShowHowLongSpeedLink').click(function(){
-        $('span#calcHowLongSpeedInputSpan').show();
-        $('span#calcHowLongSpeedLinkSpan').hide();
-        $('span#calcHowLongSpeedInputSpan input').val(getSliderValueInK()).focus().select();
-        useSliderForHowLong = false;
-    });
-    $('a#calcHideHowMuchSpeedLink').click(function(){
-        $('span#calcHowMuchSpeedLinkSpan').show();
-        $('span#calcHowMuchSpeedInputSpan').hide();
-        useSliderForHowMuch = true;
-        updateHowMuchResult();
-    });
-    $('a#calcHideHowLongSpeedLink').click(function(){
-        $('span#calcHowLongSpeedLinkSpan').show();
-        $('span#calcHowLongSpeedInputSpan').hide();
-        useSliderForHowLong = true;
-        updateHowLongResult();
-    });
-
     $('#calcHowLongSpeedInput').keyup(function(e){
         updateHowLongResult();
     });
@@ -202,6 +138,7 @@ $(function(){
     timeInput.keyup(function(e){
         updateHowMuchResult();
     });
-    
-    sliderDiv.slider('value', BITMETER.model.getMonitorScale()/2);
+
+    howLongSpeedInput.val(Math.round(BITMETER.model.getMonitorScale() / (2 * bytesPerK)));
+    howMuchSpeedInput.val(Math.round(BITMETER.model.getMonitorScale() / (2 * bytesPerK)));
 });

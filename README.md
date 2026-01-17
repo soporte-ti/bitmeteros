@@ -30,3 +30,21 @@ The Calculator utility lets you work out how long it will take to upload or down
 The Preferences pane allows you to customise many aspects of the interface to suit your needs, including the built-in RSS feed
 
 ![BitMeter OS Preferences](http://codebox.org.uk/assets/images/bitmeteros/bmos_prefs.png)
+
+## Building for Windows (x86)
+
+1. Install a 32-bit MinGW/MSYS2 toolchain so that `mingw32-make` and a 32-bit `gcc` are available in your PATH.
+2. Open the MinGW/MSYS2 shell and change to the Windows build directory:
+   ```
+   cd build/windows
+   ```
+3. Compile all components with the provided makefile:
+   ```
+   mingw32-make -f makefile all
+   ```
+   Use `mingw32-make test` to run the bundled unit tests or `mingw32-make install` to copy the binaries and web files into the default `Program Files` location.
+4. (Optional) Create an installer after building by installing [NSIS](https://nsis.sourceforge.io/) and running:
+   ```
+   makensis BitmeterOS.nsi
+   ```
+   The `build/windows/support` folder already contains the helper resources referenced by the installer script.

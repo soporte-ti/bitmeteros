@@ -28,6 +28,9 @@ BITMETER.model = (function(){
         'ulColour' : config.ulColour,
         'adapters' : '',
         'binaryUnits' : 'true',
+        'useBits' : 'false',
+        'fixedUnit' : 'auto',
+        'bandwidthDp' : '2',
         'showFilterWarning' : 'true',
         'monitorRefresh' : config.monitorInterval,
         'historyRefresh' : config.historyInterval,
@@ -195,6 +198,27 @@ BITMETER.model = (function(){
     };
     model.setBinaryUnits = function(binaryUnits){
         set('binaryUnits', '' + binaryUnits, true);
+    };
+
+    model.getUseBits = function(){
+        return get('useBits') === 'true';
+    };
+    model.setUseBits = function(useBits){
+        set('useBits', '' + useBits, true);
+    };
+
+    model.getFixedUnit = function(){
+        return get('fixedUnit');
+    };
+    model.setFixedUnit = function(fixedUnit){
+        set('fixedUnit', fixedUnit, true);
+    };
+
+    model.getBandwidthDp = function(){
+        return Number(get('bandwidthDp'));
+    };
+    model.setBandwidthDp = function(bandwidthDp){
+        set('bandwidthDp', '' + bandwidthDp, true);
     };
 
  // Interval, in milliseconds, between updates on the Monitor page

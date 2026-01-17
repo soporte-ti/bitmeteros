@@ -186,12 +186,12 @@ $(function(){
                 '<tr><td class="historyHoverTime" colspan="3">', dateTimeTxt, '</td></tr>',
                 '<tr>',
                     '<td class="historyHoverDir">DL:</td>',
-                    '<td class="historyHoverData">', BITMETER.formatAmount(dl), '</td>',
+                    '<td class="historyHoverData">', BITMETER.formatDataAmount(dl), '</td>',
                     '<td class="historyHoverData">[ ', BITMETER.formatAmount(dl/intervalInSecs), '/s ]</td>',
                 '</tr>',
                 '<tr>',
                     '<td class="historyHoverDir">UL:</td>',
-                    '<td class="historyHoverData">', BITMETER.formatAmount(ul), '</td>',
+                    '<td class="historyHoverData">', BITMETER.formatDataAmount(ul), '</td>',
                     '<td class="historyHoverData">[ ', BITMETER.formatAmount(ul/intervalInSecs), '/s ]</td>',
                 '</tr>',
             '</table>'
@@ -203,7 +203,7 @@ $(function(){
  // Set up the Minutes graph
     function setupMinutesGraph(){
         BITMETER.historyDisplayMinutes = $.plot(historyDisplayMinutesObj, [{color: BITMETER.model.getDownloadColour(), data: []}, {color: BITMETER.model.getUploadColour(), data: []}], {
-                yaxis: {min: 0, tickFormatter: BITMETER.formatAmount, ticks : BITMETER.makeYAxisIntervalFn(2)},
+                yaxis: {min: 0, tickFormatter: BITMETER.formatDataAmount, ticks : BITMETER.makeYAxisIntervalFn(2)},
                 xaxis: {max: 60 * BITMETER.getHistoryMinutesTs(), min: 0, ticks: function(axis){ 
                      // The labels on the x-axis of the Minutes graph should just show time in hours and minutes, at 15 minute intervals
                         var arrTicks = [], now, time, minTime, tick, date, hours, mins;
@@ -285,7 +285,7 @@ $(function(){
  // Set up the Hours graph
     function setupHoursGraph(){
         BITMETER.historyDisplayHours = $.plot(historyDisplayHoursObj, [{color: BITMETER.model.getDownloadColour(), data: []}, {color: BITMETER.model.getUploadColour(), data: []}], {
-                yaxis: {max: 3000000, min: 0, tickFormatter: BITMETER.formatAmount, ticks : BITMETER.makeYAxisIntervalFn(2)},
+                yaxis: {max: 3000000, min: 0, tickFormatter: BITMETER.formatDataAmount, ticks : BITMETER.makeYAxisIntervalFn(2)},
                 xaxis: {max: 3600 * BITMETER.getHistoryHoursTs(), min: 0, ticks: function(axis){ 
                      // The labels on the x-axis of the Hours graph should appear at 12-hour intervals
                         var arrTicks = [], now = new Date(), time, minTime, tick, date, hours, day;
@@ -362,7 +362,7 @@ $(function(){
  // Set up the Days graph
     function setupDaysGraph(){
         BITMETER.historyDisplayDays = $.plot(historyDisplayDaysObj, [{color: BITMETER.model.getDownloadColour(), data: []}, {color: BITMETER.model.getUploadColour(), data: []}], {
-                yaxis: {max: 30000000, min: 0, tickFormatter: BITMETER.formatAmount, ticks : BITMETER.makeYAxisIntervalFn(2)},
+                yaxis: {max: 30000000, min: 0, tickFormatter: BITMETER.formatDataAmount, ticks : BITMETER.makeYAxisIntervalFn(2)},
                 xaxis: {max: 3600 * 24 * BITMETER.getHistoryDaysTs(), min: 0, ticks: function(axis){ 
                      // The labels on the x-axis of the Days graph should appear at 7-day intervals
                         var arrTicks = [], now = new Date(), time, minTime, tick, date, month, day;

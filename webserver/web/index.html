@@ -594,19 +594,15 @@
     				            <td><input id="calcHowLongAmountInput" type="text" maxlength="10" /></td>
     				            <td id="calcHowLongResult"></td>
     				        </tr>
-    				        <tr>
-    				            <td class="calcTableName">Speed</td>
-    				            <td>
-    				                <span id="calcHowLongSpeedInputSpan">
-        				                <input id="calcHowLongSpeedInput" type="text" maxlength="10" /> kB/s<br>
-        				                <a id="calcHideHowLongSpeedLink">Click here</a> to set speed using the slider
-        				            </span>
-        				            <span id="calcHowLongSpeedLinkSpan">
-            				            Speed is set using the slider on the right<br> <a id="calcShowHowLongSpeedLink">Click here</a> to enter speed manually
-        				            </span>
-    				            </td>
-    				            <td id="calcHowLongDesc"></td>
-    				        </tr>
+                                        <tr>
+                                            <td class="calcTableName">Speed</td>
+                                            <td>
+                                                <span id="calcHowLongSpeedInputSpan">
+                                                        <input id="calcHowLongSpeedInput" type="text" maxlength="10" /> kB/s
+                                                    </span>
+                                            </td>
+                                            <td id="calcHowLongDesc"></td>
+                                        </tr>
     				    </table>
     				    <h3 id="calcHowMuch">How much</h3>
     				    <p class="compact calcDesc">
@@ -622,30 +618,19 @@
     				            <td id="calcHowMuchResult"></td>
     				        </tr>
     				        <tr>
-    				            <td class="calcTableName">Speed</td>
-    				            <td>
-    				                <span id="calcHowMuchSpeedInputSpan">
-        				                <input id="calcHowMuchSpeedInput" type="text" maxlength="10" /> kB/s<br>
-        				                <a id="calcHideHowMuchSpeedLink">Click here</a> to set speed using the slider
-        				            </span>
-        				            <span id="calcHowMuchSpeedLinkSpan">
-        				                Speed is set using the slider on the right<br> <a id="calcShowHowMuchSpeedLink">Click here</a> to enter speed manually
-        				            </span>
-    				            </td>
-    				            <td id="calcHowMuchDesc"></td>
-    				        </tr>
-    				    </table>
-    				</div>
-				    <div id="calcSlider"></div>
-				    <div id="calcSliderLabels">
-				        <span id="calcSliderMax">- 100</span>
-				        <span id="calcSliderCaption">Speed</span>
-				        <span id="calcSliderValue">50kB/s</span>
-				        <span id="calcSliderMin">- 0</span>
-				    </div>
-				    <div class="spacer"></div>
-				</div>
-			</div>
+                                            <td class="calcTableName">Speed</td>
+                                            <td>
+                                                <span id="calcHowMuchSpeedInputSpan">
+                                                        <input id="calcHowMuchSpeedInput" type="text" maxlength="10" /> kB/s
+                                                    </span>
+                                            </td>
+                                            <td id="calcHowMuchDesc"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                    <div class="spacer"></div>
+                                </div>
+                        </div>
 		    <div id="prefs">
 				<h2>Preferences</h2><div class="helpLink" id="prefsHelpLink"><a title="Help" class="ui-icon ui-icon-newwin"></a></div>
 		        <div class="panelContainer">
@@ -691,22 +676,41 @@
 								<button id="prefsAdaptersSaveLocal">Save in Browser</button>
 							</p>
 					    </div>
-					    <div id="prefsTabs-3">
-					        <p class="compact">What type of units should be used when displaying data speeds/volumes.</p>
-							<table class="prefTable">
-								<tr>
-									<td><input type="radio" class="prefRadio" id="binaryUnits" name="displayUnits" /></td>
-									<td><label for="binaryUnits">Binary Units (1kB = 1024 bytes)</label></td>
-								</tr>
-								<tr>
-									<td><input type="radio" class="prefRadio"id="decimalUnits" name="displayUnits" /></td>
-									<td><label for="decimalUnits">Decimal/SI Units (1kB = 1000 bytes)</label></td>
-								</tr>
-							</table>
-							<p>
-								<button id="prefsUnitsLocal">Save in Browser</button> 
-							</p>
-					    </div>
+                                                <div id="prefsTabs-3">
+                                                <p class="compact">What type of units should be used when displaying data speeds/volumes.</p>
+                                                        <table class="prefTable">
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio" id="binaryUnits" name="displayUnits" /></td>
+                                                                        <td><label for="binaryUnits">Binary Units (1kB = 1024 bytes)</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio"id="decimalUnits" name="displayUnits" /></td>
+                                                                        <td><label for="decimalUnits">Decimal/SI Units (1kB = 1000 bytes)</label></td>
+                                                                </tr>
+                                                        </table>
+                                                <p class="compact">Choose whether to display rates in bits or bytes and pick a fixed unit if required.</p>
+                                                        <table class="prefTable">
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio" id="unitBytes" name="bitByteUnits" /></td>
+                                                                        <td><label for="unitBytes">Show values in Bytes</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><input type="radio" class="prefRadio" id="unitBits" name="bitByteUnits" /></td>
+                                                                        <td><label for="unitBits">Show values in Bits</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><label for="prefFixedUnit">Display unit:</label></td>
+                                                                        <td><select id="prefFixedUnit"></select></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td><label for="prefDecimalPlaces">Decimal places:</label></td>
+                                                                        <td><input type="text" id="prefDecimalPlaces" class="textbox" maxlength="1" /></td>
+                                                                </tr>
+                                                        </table>
+                                                        <p>
+                                                                <button id="prefsUnitsLocal">Save in Browser</button>
+                                                        </p>
+                                            </div>
 					    <div id="prefsTabs-4">
 					        <p class="compact">Configure the <a class="popup" href="rss.xml">RSS Feed</a></p>
 					        <h4>Number of Items</h4>

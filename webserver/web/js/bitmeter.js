@@ -409,39 +409,67 @@ BITMETER.formatInterval.TINY  = 0;
 BITMETER.formatInterval.SHORT = 1;
 BITMETER.formatInterval.LONG  = 2;
 
-// Convert an integer UL/DL value into a 2-dp floating point value with 2 letter abbreviation
+// Convert an integer UL/DL value into a floating point value with an abbreviation
 BITMETER.formatAmount = (function(){
-    var K = BITMETER.getBytesPerK(),
-        KB_MIN = K,
-        MB_MIN = KB_MIN * K,
-        GB_MIN = MB_MIN * K,
-        TB_MIN = GB_MIN * K,
-        PB_MIN = TB_MIN * K;
+    function getUnitDefinitions(useBits){
+        var k = BITMETER.getBytesPerK();
+        return useBits ? [
+            {unit : 'b',  factor : 1},
+            {unit : 'kb', factor : k},
+            {unit : 'Mb', factor : k * k},
+            {unit : 'Gb', factor : k * k * k},
+            {unit : 'Tb', factor : k * k * k * k},
+            {unit : 'Pb', factor : k * k * k * k * k}
+        ] : [
+            {unit : 'B',  factor : 1},
+            {unit : 'kB', factor : k},
+            {unit : 'MB', factor : k * k},
+            {unit : 'GB', factor : k * k * k},
+            {unit : 'TB', factor : k * k * k * k},
+            {unit : 'PB', factor : k * k * k * k * k}
+        ];
+    }
 
-    return function (amt, hideDp){
-        var numAmt, units, dp = hideDp ? 0 : 2;
-        if (amt < KB_MIN) {
-            numAmt = amt.toFixed(dp);
-            units = 'B';
-        } else if (amt < MB_MIN) {
-            numAmt = (amt/KB_MIN).toFixed(dp);
-            units = 'kB';
-        } else if (amt < GB_MIN) {
-            numAmt = (amt/MB_MIN).toFixed(dp);
-            units = 'MB';
-        } else if (amt < TB_MIN) {
-            numAmt = (amt/GB_MIN).toFixed(dp);
-            units = 'GB';
-        } else if (amt < PB_MIN) {
-            numAmt = (amt/TB_MIN).toFixed(dp);
-            units = 'TB';
-        } else {
-            numAmt = (amt/PB_MIN).toFixed(dp);
-            units = 'PB';
+    function getUnitForValue(amt, units){
+        var idx = 0;
+        while (idx < units.length - 1 && amt >= units[idx + 1].factor) {
+            idx++;
         }
-        return numAmt + ' ' + units;
+        return units[idx];
+    }
+
+    return function (amt, hideDp, opts){
+        var dp = hideDp ? 0 : BITMETER.model.getBandwidthDp(),
+            useBitsPref = BITMETER.model.getUseBits(),
+            useBits = (opts && typeof opts.useBits !== 'undefined') ? opts.useBits : useBitsPref,
+            fixedUnit = BITMETER.model.getFixedUnit(),
+            units = getUnitDefinitions(useBits),
+            unitLookup = {},
+            selectedUnit, convertedValue;
+
+        $.each(units, function(_, def){
+            unitLookup[def.unit] = def;
+        });
+
+        if (useBits) {
+            amt *= 8;
+        }
+
+        if (!fixedUnit || !unitLookup[fixedUnit]) {
+            selectedUnit = getUnitForValue(amt, units);
+        } else {
+            selectedUnit = unitLookup[fixedUnit];
+        }
+
+        convertedValue = amt / selectedUnit.factor;
+
+        return convertedValue.toFixed(dp) + ' ' + selectedUnit.unit;
     };
 }());
+
+BITMETER.formatDataAmount = function(amt, hideDp){
+    return BITMETER.formatAmount(amt, hideDp, {useBits: false});
+};
 
 // Adjust the vertical scale of a graph
 BITMETER.applyScale = (function(){

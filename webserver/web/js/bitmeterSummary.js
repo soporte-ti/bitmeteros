@@ -24,18 +24,18 @@ BITMETER.tabShowSummary = function(){
 		function populateSummary(){
 		 // Take the current Summary values out of the Model and display them
 		    var summary = BITMETER.model.getSummary(), sinceDate, sinceDateTxt;
-			tdTodayDl.html(BITMETER.formatAmount(summary.today.dl));
-			tdTodayUl.html(BITMETER.formatAmount(summary.today.ul));
-			tdTodayCm.html(BITMETER.formatAmount(summary.today.dl + summary.today.ul));
-			tdMonthDl.html(BITMETER.formatAmount(summary.month.dl));
-			tdMonthUl.html(BITMETER.formatAmount(summary.month.ul));
-			tdMonthCm.html(BITMETER.formatAmount(summary.month.dl + summary.month.ul));
-			tdYearDl.html(BITMETER.formatAmount(summary.year.dl));
-			tdYearUl.html(BITMETER.formatAmount(summary.year.ul));
-			tdYearCm.html(BITMETER.formatAmount(summary.year.dl + summary.year.ul));
-			tdTotalDl.html(BITMETER.formatAmount(summary.total.dl));
-			tdTotalUl.html(BITMETER.formatAmount(summary.total.ul));
-			tdTotalCm.html(BITMETER.formatAmount(summary.total.dl + summary.total.ul));
+                    tdTodayDl.html(BITMETER.formatDataAmount(summary.today.dl));
+                    tdTodayUl.html(BITMETER.formatDataAmount(summary.today.ul));
+                    tdTodayCm.html(BITMETER.formatDataAmount(summary.today.dl + summary.today.ul));
+                    tdMonthDl.html(BITMETER.formatDataAmount(summary.month.dl));
+                    tdMonthUl.html(BITMETER.formatDataAmount(summary.month.ul));
+                    tdMonthCm.html(BITMETER.formatDataAmount(summary.month.dl + summary.month.ul));
+                    tdYearDl.html(BITMETER.formatDataAmount(summary.year.dl));
+                    tdYearUl.html(BITMETER.formatDataAmount(summary.year.ul));
+                    tdYearCm.html(BITMETER.formatDataAmount(summary.year.dl + summary.year.ul));
+                    tdTotalDl.html(BITMETER.formatDataAmount(summary.total.dl));
+                    tdTotalUl.html(BITMETER.formatDataAmount(summary.total.ul));
+                    tdTotalCm.html(BITMETER.formatDataAmount(summary.total.dl + summary.total.ul));
 			
 			sinceDate = new Date(BITMETER.model.getSummary().since * 1000);
 			sinceDateTxt = BITMETER.consts.weekdays[sinceDate.getDay()] + ', ' + sinceDate.getDate() + ' ' + 

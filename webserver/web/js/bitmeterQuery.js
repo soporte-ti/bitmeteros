@@ -174,9 +174,9 @@ $(function(){
                     return BITMETER.zeroPad(startOfRange.getHours()) + ':00-' + BITMETER.zeroPad(endOfRange.getHours()) + ':00 ' + $.datepicker.formatDate('dd M yy', startOfRange);
                 }
             },
-            BITMETER.formatAmount,
-            BITMETER.formatAmount,
-            BITMETER.formatAmount
+            BITMETER.formatDataAmount,
+            BITMETER.formatDataAmount,
+            BITMETER.formatDataAmount
         ],
         onReload : runQuery
     });

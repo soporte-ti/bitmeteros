@@ -402,7 +402,7 @@ p.filterWarning{
     top: 260px;
 }
 span#calcHowMuchSpeedInputSpan, span#calcHowLongSpeedInputSpan{
-    display: none;   
+    display: inline-block;
 }
 .calcTable input{
     margin-bottom: 0.5em;   
